@@ -8,9 +8,9 @@ import org.tecnologias.db.Provedor;
 public class DataBaseTests {
     @Test
     public void agregarPelucheTest() {
-        Assertions.assertTrue(DataBase.getInstance().agregarProducto(new Peluche(100326009, "Oso Lotso", new Provedor(), 10)));
-        Assertions.assertFalse(DataBase.getInstance().agregarProducto(new Peluche(100326009, "Oso Lotso", new Provedor(), 10)));
-        Assertions.assertTrue(DataBase.getInstance().agregarProducto(new Peluche(100326010, "Teddy", new Provedor(), 10)));
+        Assertions.assertTrue(DataBase.getInstance().agregarProducto(new Peluche(100326009, "Oso Lotso", Provedor.MATTEL, 10)));
+        Assertions.assertFalse(DataBase.getInstance().agregarProducto(new Peluche(100326009, "Oso Lotso", Provedor.MATTEL, 10)));
+        Assertions.assertTrue(DataBase.getInstance().agregarProducto(new Peluche(100326010, "Teddy", Provedor.MUÑELOCOS, 10)));
     }
 
     @AfterAll
