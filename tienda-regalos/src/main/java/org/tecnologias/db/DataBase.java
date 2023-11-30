@@ -1,6 +1,5 @@
 package org.tecnologias.db;
 
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 
 public class DataBase {
@@ -9,7 +8,13 @@ public class DataBase {
     public boolean agregarProducto(Peluche peluche) {
         return inventario.put(peluche.getCodigo(), peluche) == null;
     }
-
+    public boolean modificarCantidad(Peluche peluche, Integer cantidad) {
+        if (inventario.containsKey(peluche.getCodigo())) {
+            inventario.get(peluche.getCodigo()).setCantidad(cantidad);
+            return true;
+        }
+        return false;
+    }
     public boolean eliminarProducto(Peluche peluche) {
         return inventario.remove(peluche.getCodigo()) == null;
     }
