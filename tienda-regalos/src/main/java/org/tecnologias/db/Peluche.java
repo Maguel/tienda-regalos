@@ -4,7 +4,7 @@ public class Peluche {
     private final Integer codigo;
     private final String nombre;
     private final Provedor provedor;
-    private final Integer cantidad;
+    private Integer cantidad;
 
     public Peluche(Integer codigo, String nombre, Provedor provedor, Integer cantidad) {
         this.codigo = codigo;
@@ -27,6 +27,10 @@ public class Peluche {
 
     public Integer getCantidad() {
         return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
     @Override
