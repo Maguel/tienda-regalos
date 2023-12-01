@@ -1,4 +1,4 @@
-package org.tecnologias;
+package org.tecnologias.db;
 
 import org.junit.jupiter.api.*;
 import org.tecnologias.db.DataBase;
