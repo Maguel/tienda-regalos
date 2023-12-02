@@ -1,5 +1,7 @@
 package org.tecnologias.db;
 
+import org.tecnologias.admin.Admin;
+
 public enum Provedor {
 
     MATTEL("MATTEL",
@@ -41,5 +43,8 @@ public enum Provedor {
 
     public String getImagen() {
         return imagen;
+    }
+    public void mostrar(){
+        System.out.println("Empresa: " + nombre);
     }
 }
