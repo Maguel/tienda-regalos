@@ -4,13 +4,15 @@ public class Peluche {
     private final Integer codigo;
     private final String nombre;
     private final Provedor provedor;
+    private Float precio;
     private Integer cantidad;
 
-    public Peluche(Integer codigo, String nombre, Provedor provedor, Integer cantidad) {
+    public Peluche(Integer codigo, String nombre, Provedor provedor, Integer cantidad, Float precio) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.provedor = provedor;
         this.cantidad = cantidad;
+        this.precio = precio;
     }
 
     public Integer getCodigo() {
@@ -35,6 +37,6 @@ public class Peluche {
 
     @Override
     public String toString() {
-        return "{ Peluche: " + nombre + "; Codigo: " + codigo + "; Cantidad: " + cantidad + " }\n";
+        return "{ Peluche: " + nombre + "; Codigo: " + codigo + "; Cantidad: " + cantidad + "; Precio: }" + precio +"\n";
     }
 }

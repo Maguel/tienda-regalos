@@ -9,13 +9,9 @@ import java.util.Scanner;
 
 public class Admin {
     private String contraseña;
-    private String nombre;
     private Inventario inventario = new Inventario();
     private CreadorFactura creador = null;
 
-    Admin(String nombre) {
-        this.nombre = nombre;
-    }
 
     public boolean agregarProducto() {
         Scanner scanner = new Scanner(System.in);
@@ -24,11 +20,14 @@ public class Admin {
         Provedor provedor;
         String proveedor2;
         Integer cantidad;
+        Float precio;
 
         System.out.print("Codidgo del producto: ");
-        codigo = (Integer) scanner.nextInt();
+        codigo = scanner.nextInt();
         System.out.print("Nombre del producto: ");
         nombre = scanner.next();
+        System.out.println("Precio del producto");
+        precio = scanner.nextFloat();
 
         for (Provedor provedor1 : Provedor.values()) {
             provedor1.mostrar();
@@ -40,7 +39,6 @@ public class Admin {
         if (proveedor2.equalsIgnoreCase("Mattel")) {
             provedor = Provedor.MATTEL;
         } else if (proveedor2.equalsIgnoreCase("Hasbro")) {
-
             provedor = Provedor.HASBRO;
         } else {
             provedor = Provedor.MUÑELOCOS;
@@ -49,7 +47,7 @@ public class Admin {
         System.out.print("Cantidad de productos: ");
         cantidad = (Integer) scanner.nextInt();
 
-        Peluche peluchito = new Peluche(codigo, nombre, provedor, cantidad);
+        Peluche peluchito = new Peluche(codigo, nombre, provedor, cantidad, precio);
 
 
         return inventario.agregarProducto(peluchito);
@@ -92,7 +90,7 @@ public class Admin {
         String nombre;
         Integer cantidad = 1;
         Integer codigo;
-        Integer precio = 1;
+        Float precio;
 
 
         for (Provedor provedor1 : Provedor.values()) {
@@ -123,10 +121,10 @@ public class Admin {
             System.out.print("Candtidad del productos: ");
             cantidad = (Integer) scanner.nextInt();
             System.out.print("Precio del prodcuto: ");
-            precio = (Integer) scanner.nextInt();
+            precio = (Float) scanner.nextFloat();
 
 
-            Peluche peluche = new Peluche(codigo, nombre, provedor, cantidad);
+            Peluche peluche = new Peluche(codigo, nombre, provedor, cantidad, precio);
             articulos.add(peluche);
 
             System.out.print("Seguir introduciendo articulos: (Si o No) ");
@@ -161,11 +159,11 @@ public class Admin {
     }
 
     public static void adminMain() {
-        Admin admin = new Admin("admin");
+        Admin admin = new Admin();
         Scanner scanner = new Scanner(System.in);
-        int opcion = 0;
+        String opcion = "0";
 
-        while(opcion != 7){
+        while(!opcion.equals("7")){
             System.out.print(
                     "1: Agregar Producto" +
                     "\n2: Eliminar Producto" +
@@ -177,29 +175,35 @@ public class Admin {
                     "\nOpcion: "
             );
 
-            opcion = scanner.nextInt();
+            opcion = scanner.nextLine();
 
             switch (opcion){
-                case 1:
-                    admin.agregarProducto();
+                case "1":
+                    if (admin.agregarProducto())
+                        System.out.println("Producto agregado con exito");
+                    else
+                        System.out.println("El producto no fue registrado");
                     break;
-                case 2:
+                case "2":
                     admin.eliminarProducto();
                     break;
-                case 3:
+                case "3":
                     admin.modificarCantidad();
                     break;
-                case 4:
+                case "4":
                     admin.generarFactura();
                     break;
-                case 5:
+                case "5":
                     admin.imprimirFacturas();
                     break;
-                case 6:
+                case "6":
                     admin.imprimirInventario();
                     break;
-                case 7:
-                    opcion = 7;
+                case "7":
+                    System.out.println("Cerrando sesion");
+                    break;
+                default:
+                    System.out.println("Opcion invalida");
             }
         }
     }

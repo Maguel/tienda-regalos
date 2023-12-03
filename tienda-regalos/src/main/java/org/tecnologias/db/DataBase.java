@@ -29,11 +29,11 @@ public class DataBase {
     }
 
     public boolean eliminarProducto(Peluche peluche) {
-        return inventario.remove(peluche.getCodigo()) == null;
+        return inventario.remove(peluche.getCodigo()) != null;
     }
 
     private DataBase() {
-        Peluche creeper = new Peluche(475,"Creeper",Provedor.MATTEL,5);
+        Peluche creeper = new Peluche(475,"Creeper",Provedor.MATTEL,5, 50F);
         inventario.put(creeper.getCodigo(),creeper);
     }
 
