@@ -8,8 +8,8 @@ import java.util.Date;
 
 public class FacturaMattel extends Factura{
 
-    FacturaMattel(Date fecha, float monto, Provedor provedor, ArrayList<Peluche> articulos){
-        super(fecha,monto,provedor,articulos);
+    FacturaMattel(Date fecha, float monto, ArrayList<Peluche> articulos){
+        super(fecha,monto,Provedor.MATTEL,articulos);
     }
 
 }

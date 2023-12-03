@@ -36,9 +36,15 @@ public class Admin {
         System.out.print("Proveedor: ");
         proveedor2 = scanner.next();
 
+<<<<<<< HEAD
         if (proveedor2.equalsIgnoreCase("Mattel")) {
             provedor = Provedor.MATTEL;
         } else if (proveedor2.equalsIgnoreCase("Hasbro")) {
+=======
+        if (proveedor2.equals("Mattel")) {
+            provedor = Provedor.MATTEL;
+        } else if (proveedor2.equals("Hasbro")) {
+>>>>>>> 99b72d173975223febee0c45ee7d6f851bfdc811
             provedor = Provedor.HASBRO;
         } else {
             provedor = Provedor.MUÑELOCOS;
@@ -80,10 +86,14 @@ public class Admin {
     }
 
     public void generarFactura() {
+<<<<<<< HEAD
 
+=======
+        Provedor provedor = null;
+>>>>>>> 99b72d173975223febee0c45ee7d6f851bfdc811
         Date fecha = new Date();
         float monto = 0;
-        Provedor provedor = null;
+
         ArrayList<Peluche> articulos = new ArrayList<>();
         String respuesta = "Si";
         Scanner scanner = new Scanner(System.in);
@@ -100,6 +110,7 @@ public class Admin {
         System.out.print("Proveedor del que quieres facturar: ");
         String opcion = scanner.next();
 
+<<<<<<< HEAD
         if (opcion.equalsIgnoreCase("MATTEL")) {
             creador = new CreadorFacturaMattel();
             provedor = Provedor.MATTEL;
@@ -107,12 +118,25 @@ public class Admin {
             creador = new CreadorFacturaHasbro();
             provedor = Provedor.HASBRO;
         } else if (opcion.equalsIgnoreCase("Muñelocos")) {
+=======
+        if (opcion.equals("MATTEL")) {
+            creador = new CreadorFacturaMattel();
+            provedor = Provedor.MATTEL;
+        } else if (opcion.equals("Hasbro")) {
+            creador = new CreadorFacturaHasbro();
+            provedor = Provedor.HASBRO;
+        } else if (opcion.equals("Muñelocos")) {
+>>>>>>> 99b72d173975223febee0c45ee7d6f851bfdc811
             creador = new CreadorFacturaMuñelocos();
             provedor = Provedor.MUÑELOCOS;
         }
 
 
+<<<<<<< HEAD
         while (respuesta.equalsIgnoreCase("Si")) {
+=======
+        while (respuesta.equals("Si")) {
+>>>>>>> 99b72d173975223febee0c45ee7d6f851bfdc811
             System.out.print("Nombre del articulo: ");
             nombre = scanner.next();
             System.out.print("Codigo del articulo: ");
@@ -134,7 +158,12 @@ public class Admin {
             monto += precio * cantidad;
         }
 
+<<<<<<< HEAD
         Factura nuevaFactura = creador.crearFactura(fecha, monto, provedor, articulos);
+=======
+        Factura nuevaFactura = creador.crearFactura(fecha, monto, articulos);
+
+>>>>>>> 99b72d173975223febee0c45ee7d6f851bfdc811
 
         creador.agregarFacturas(nuevaFactura);
     }
