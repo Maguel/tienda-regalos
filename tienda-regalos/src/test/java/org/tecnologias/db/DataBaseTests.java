@@ -1,9 +1,6 @@
 package org.tecnologias.db;
 
 import org.junit.jupiter.api.*;
-import org.tecnologias.db.DataBase;
-import org.tecnologias.db.Peluche;
-import org.tecnologias.db.Provedor;
 
 public class DataBaseTests {
     @Test
