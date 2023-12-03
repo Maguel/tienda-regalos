@@ -1,5 +1,7 @@
 package org.tecnologias.db;
 
+import org.tecnologias.admin.Inventario;
+
 import java.util.HashMap;
 
 public class DataBase {
@@ -40,7 +42,9 @@ public class DataBase {
     }
 
     public void getInventario() {
-        System.out.println(inventario);
+        for (Peluche peluche: inventario.values()) {
+            System.out.println("Codigo: " + peluche.getCodigo() + " : " + peluche);
+        }
     }
 
     public Peluche getProducto(int id){
