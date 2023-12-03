@@ -8,8 +8,8 @@ import java.util.Date;
 
 public class CreadorFacturaMuñelocos extends CreadorFactura{
 
-    protected Factura crearFactura(Date fecha, float monto, Provedor provedor, ArrayList<Peluche> articulos) {
-        return new FacturaMuñelocos(fecha,monto,provedor,articulos);
+    protected Factura crearFactura(Date fecha, float monto, ArrayList<Peluche> articulos) {
+        return new FacturaMuñelocos(fecha,monto,articulos);
     }
 
 
