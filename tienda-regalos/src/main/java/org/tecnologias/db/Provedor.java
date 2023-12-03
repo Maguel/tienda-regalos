@@ -42,4 +42,7 @@ public enum Provedor {
     public String getImagen() {
         return imagen;
     }
+    public void mostrar(){
+        System.out.println("Empresa: " + nombre);
+    }
 }
