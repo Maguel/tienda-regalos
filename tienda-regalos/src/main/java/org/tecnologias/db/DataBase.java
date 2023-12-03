@@ -31,6 +31,8 @@ public class DataBase {
     }
 
     private DataBase() {
+        Peluche creeper = new Peluche(475,"Creeper",Provedor.MATTEL,5);
+        inventario.put(creeper.getCodigo(),creeper);
     }
 
     public static DataBase getInstance() {
@@ -39,6 +41,10 @@ public class DataBase {
 
     public void getInventario() {
         System.out.println(inventario);
+    }
+
+    public Peluche getProducto(int id){
+        return inventario.get(id);
     }
 
     private static class Holder {
