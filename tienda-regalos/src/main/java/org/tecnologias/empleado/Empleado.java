@@ -49,6 +49,7 @@ public class Empleado {
         if (!venta.vacia()) {
             venta.cocretarVenta();
             historial();
+            txt();
             venta.imprimirVenta();
             venta.limpiar();
             System.out.println("La venta se realizo con exito.");
@@ -85,6 +86,7 @@ public class Empleado {
                     opc1 = sc.nextLine();
                     switch (opc1) {
                         case "1":
+
                             empleado.realizarVenta();
                             break;
                         case "2":
@@ -107,7 +109,6 @@ public class Empleado {
             } else
                 System.out.println("Cerrando sesion");
         } while (!opc.equals("2"));
-        empleado.txt();
     }
 
     public void txt() {
@@ -118,7 +119,7 @@ public class Empleado {
             }
             System.out.println("Historial se guardo con exito");
         } catch (IOException e) {
-            System.out.println(e.getMessage());;
+            System.out.println(e.getMessage());
         }
     }
 }

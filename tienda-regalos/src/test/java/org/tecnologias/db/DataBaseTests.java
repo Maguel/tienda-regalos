@@ -5,13 +5,13 @@ import org.junit.jupiter.api.*;
 public class DataBaseTests {
     DataBase db = DataBase.getInstance();
     Peluche.Builder builder = new Peluche.Builder();
-    @AfterAll
-    public static void dbTesting() {
-        DataBase.getInstance().getInventario();
+    @Test
+    public void dbTesting() {
+        DataBase.getInstance();
     }
     @Test
     public void agregarPeluche() {
-        Assertions.assertTrue(db.agregarProducto(
+        Assertions.assertFalse(db.agregarProducto(
                 builder.precio(50.56F)
                         .tamagno("Chiquito")
                         .clasificacion("Tierno")

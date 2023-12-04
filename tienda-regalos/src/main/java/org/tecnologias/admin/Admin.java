@@ -1,5 +1,6 @@
 package org.tecnologias.admin;
 
+import org.tecnologias.db.DataBase;
 import org.tecnologias.db.Peluche;
 import org.tecnologias.db.Provedor;
 
@@ -128,6 +129,9 @@ public class Admin {
         }
 
     }
+    public void imprimirHistorialVentas() {
+        DataBase.getInstance().mostrarHistorialVentas();
+    }
 
     public static void adminMain() {
         Admin admin = new Admin();
@@ -142,7 +146,8 @@ public class Admin {
                             "\n4: Generar Factura" +
                             "\n5: Imprimir Factura" +
                             "\n6: Imprimir Inventario" +
-                            "\n7: Cerrar sesión" +
+                            "\n7: Imprimir Historial de Ventas" +
+                            "\n8: Cerrar sesión" +
                             "\nOpcion: "
             );
 
@@ -177,6 +182,8 @@ public class Admin {
                     admin.imprimirInventario();
                     break;
                 case "7":
+                    admin.imprimirHistorialVentas();
+                case "8":
                     System.out.println("Cerrando sesion");
                     break;
                 default:

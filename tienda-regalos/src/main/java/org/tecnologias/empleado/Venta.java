@@ -1,15 +1,18 @@
 package org.tecnologias.empleado;
 
+import org.tecnologias.db.DataBase;
 import org.tecnologias.db.Peluche;
 
 import java.io.Serializable;
 import java.util.*;
 
 public class Venta implements Serializable {
+    private final DataBase db = DataBase.getInstance();
     private Map<Peluche, Integer> articulos = new HashMap<>();
     private Date fecha;
-    private Integer id = 1;
+    private Integer id = db.getHistorialVentas().isEmpty() ? 1 : db.getHistorialVentas().size();
     private Integer cantidad;
+    private Float monto = 0.0F;
 
     public void agregarpeluche(Peluche peluche) {
         if (articulos.containsKey(peluche)) {
@@ -18,6 +21,16 @@ public class Venta implements Serializable {
             cantidad = 1;
             articulos.put(peluche, cantidad);
         }
+    }
+
+    public Venta(Map<Peluche, Integer> articulos, Date fecha, Float monto, Integer id) {
+        this.articulos = articulos;
+        this.fecha = fecha;
+        this.monto = monto;
+        this.id = id;
+    }
+
+    public Venta() {
     }
 
     public void cocretarVenta() {
@@ -51,11 +64,11 @@ public class Venta implements Serializable {
     }
 
     public double calcularTotalVenta() {
-        double total = 0.0;
         for (Peluche peluche : articulos.keySet()) {
-            total += peluche.getPrecio() * articulos.get(peluche);
+            monto += peluche.getPrecio() * articulos.get(peluche);
+            db.modificarCantidad(peluche, peluche.getCantidad() - articulos.get(peluche));
         }
-        return total;
+        return monto;
     }
 
     public Map<Peluche, Integer> getListaPeluches() {
@@ -66,10 +79,12 @@ public class Venta implements Serializable {
         StringBuilder sb = new StringBuilder();
         for (Peluche peluche : articulos.keySet()) {
             sb.append("Nombre: ").append(peluche.getNombre()).append(", ")
-                    .append("Codigo: ").append(peluche.getCodigo()).append(", ");
+                    .append("Codigo: ").append(peluche.getCodigo()).append(", ")
+                    .append("Cantidad: ").append(articulos.get(peluche)).append(", ");
         }
-        sb.append("Fecha de venta: ").append(fecha).append(", ");
-        sb.append("Precio total: ").append(calcularTotalVenta());
+        sb.append("Fecha de venta: ").append(fecha).append(", ")
+                .append("Precio total: ").append(calcularTotalVenta())
+                .append(", ").append("id: ").append(id);
 
         return sb.toString();
     }

@@ -8,3 +8,4 @@ JuguetePeludo, 789012, Elefante, Hasbro, 22.99, 45, Grande
 PelucheArticulado, 890123, Dinosaurio, Mattel, 27.99, 15, Mediano
 PelucheInteractivo, 901234, Tigre, MuñeLocos, 34.99, 16, Grande
 PeluchePersonalizado, 012345, Panda, Hasbro, 25.99, 28, Mediano
+Tierno, 123123, Peluchito, MATTEL, 50.56, 23, Chiquito
