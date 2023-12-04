@@ -8,58 +8,44 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Admin {
-    private String contraseña;
     private Inventario inventario = new Inventario();
     private CreadorFactura creador = null;
+    Scanner scanner = new Scanner(System.in);
 
 
     public boolean agregarProducto() {
-        Scanner scanner = new Scanner(System.in);
-        Integer codigo;
-        String nombre;
-        Provedor provedor;
-        String proveedor2;
-        Integer cantidad;
-        Float precio;
+        Peluche.Builder builder = new Peluche.Builder();
 
-        System.out.print("Codidgo del producto: ");
-        codigo = scanner.nextInt();
-        System.out.print("Nombre del producto: ");
-        nombre = scanner.next();
-        System.out.println("Precio del producto");
-        precio = scanner.nextFloat();
+        System.out.println("Codidgo del producto: ");
+        builder.codigo(Integer.parseInt(scanner.nextLine()));
+        System.out.println("Nombre del producto: ");
+        builder.nombre(scanner.nextLine());
+        System.out.println("Precio del producto: ");
+        builder.precio(Float.parseFloat(scanner.nextLine()));
+        System.out.println("Tamaño del producto: ");
+        builder.tamagno(scanner.nextLine());
+        System.out.println("Clasificacion del producto: ");
+        builder.clasificacion(scanner.nextLine());
 
-        for (Provedor provedor1 : Provedor.values()) {
-            provedor1.mostrar();
+        for (Provedor p : Provedor.values()) {
+            p.mostrar();
         }
         System.out.print("Proveedor: ");
-        proveedor2 = scanner.next();
-
-
-        if (proveedor2.equalsIgnoreCase("Mattel")) {
-            provedor = Provedor.MATTEL;
-        } else if (proveedor2.equalsIgnoreCase("Hasbro")) {
-            provedor = Provedor.HASBRO;
-        } else {
-            provedor = Provedor.MUÑELOCOS;
-        }
+        builder.provedor(scanner.nextLine());
 
         System.out.print("Cantidad de productos: ");
-        cantidad = (Integer) scanner.nextInt();
+        builder.cantidad(Integer.parseInt(scanner.nextLine()));
 
-        Peluche peluchito = new Peluche(codigo, nombre, provedor, cantidad, precio);
-
+        Peluche peluchito = builder.build();
 
         return inventario.agregarProducto(peluchito);
     }
 
     public boolean eliminarProducto() {
-        Scanner scanner = new Scanner(System.in);
         int codigo;
         imprimirInventario();
         System.out.print("Codigo del producto a eliminar: ");
-        codigo = scanner.nextInt();
-
+        codigo = Integer.parseInt(scanner.nextLine());
 
         return inventario.eliminarProducto(inventario.getProducto(codigo));
     }
@@ -69,32 +55,24 @@ public class Admin {
     }
 
     public boolean modificarCantidad() {
-        Scanner scanner = new Scanner(System.in);
         inventario.getInventario();
         System.out.print("Codigo del Peluche a modificar: ");
-        int codigo = scanner.nextInt();
+        int codigo = Integer.parseInt(scanner.nextLine());
         System.out.print("Nueva cantidad de productos: ");
-        int cantidad = scanner.nextInt();
+        int cantidad = Integer.parseInt(scanner.nextLine());
 
         return inventario.modificarCantidad(inventario.getProducto(codigo), cantidad);
     }
 
     public void generarFactura() {
-        Provedor provedor = null;
-        Date fecha = new Date();
         float monto = 0;
-
         ArrayList<Peluche> articulos = new ArrayList<>();
         String respuesta = "Si";
-        Scanner scanner = new Scanner(System.in);
-        String nombre;
-        Integer cantidad = 1;
-        Integer codigo;
-        Float precio;
+        Peluche.Builder builder = new Peluche.Builder();
 
 
-        for (Provedor provedor1 : Provedor.values()) {
-            provedor1.mostrar();
+        for (Provedor p : Provedor.values()) {
+            p.mostrar();
         }
 
         System.out.print("Proveedor del que quieres facturar: ");
@@ -102,42 +80,35 @@ public class Admin {
 
         if (opcion.equalsIgnoreCase("MATTEL")) {
             creador = new CreadorFacturaMattel();
-            provedor = Provedor.MATTEL;
         } else if (opcion.equalsIgnoreCase("Hasbro")) {
             creador = new CreadorFacturaHasbro();
-            provedor = Provedor.HASBRO;
         } else if (opcion.equalsIgnoreCase("Muñelocos")) {
-
             creador = new CreadorFacturaMuñelocos();
-            provedor = Provedor.MUÑELOCOS;
         }
 
         while (respuesta.equalsIgnoreCase("Si")) {
-
             System.out.print("Nombre del articulo: ");
-            nombre = scanner.next();
+            builder.nombre(scanner.nextLine());
             System.out.print("Codigo del articulo: ");
-            codigo = (Integer) scanner.nextInt();
+            builder.codigo(Integer.parseInt(scanner.nextLine()));
             System.out.print("Candtidad del productos: ");
-            cantidad = (Integer) scanner.nextInt();
+            builder.cantidad(Integer.parseInt(scanner.nextLine()));
             System.out.print("Precio del prodcuto: ");
-            precio = (Float) scanner.nextFloat();
+            builder.precio(Float.parseFloat(scanner.nextLine()));
+            System.out.println("Tamaño del producto");
 
-
-            Peluche peluche = new Peluche(codigo, nombre, provedor, cantidad, precio);
+            Peluche peluche = builder.build();
             articulos.add(peluche);
 
             System.out.print("Seguir introduciendo articulos: (Si o No) ");
-            respuesta = scanner.next();
+            respuesta = scanner.nextLine();
 
         }
         for (Peluche peluche : articulos) {
-            monto += precio * cantidad;
+            monto += peluche.getPrecio() * peluche.getCantidad();
         }
 
-
-        Factura nuevaFactura = creador.crearFactura(fecha, monto, articulos);
-
+        Factura nuevaFactura = creador.crearFactura(new Date(), monto, articulos);
 
         creador.agregarFacturas(nuevaFactura);
     }
@@ -163,21 +134,21 @@ public class Admin {
         Scanner scanner = new Scanner(System.in);
         String opcion = "0";
 
-        while(!opcion.equals("7")){
+        while (!opcion.equals("7")) {
             System.out.print(
                     "1: Agregar Producto" +
-                    "\n2: Eliminar Producto" +
-                    "\n3: Modificar Producto" +
-                    "\n4: Generar Factura" +
-                    "\n5: Imprimir Factura" +
-                    "\n6: Imprimir Inventario" +
-                    "\n7: Cerrar sesión" +
-                    "\nOpcion: "
+                            "\n2: Eliminar Producto" +
+                            "\n3: Modificar Producto" +
+                            "\n4: Generar Factura" +
+                            "\n5: Imprimir Factura" +
+                            "\n6: Imprimir Inventario" +
+                            "\n7: Cerrar sesión" +
+                            "\nOpcion: "
             );
 
             opcion = scanner.nextLine();
 
-            switch (opcion){
+            switch (opcion) {
                 case "1":
                     if (admin.agregarProducto())
                         System.out.println("Producto agregado con exito");
@@ -185,10 +156,16 @@ public class Admin {
                         System.out.println("El producto no fue registrado");
                     break;
                 case "2":
-                    admin.eliminarProducto();
+                        if (admin.eliminarProducto())
+                            System.out.println("Producto eliminado con exito");
+                        else
+                            System.out.println("El producto no fue eliminado");
                     break;
                 case "3":
-                    admin.modificarCantidad();
+                        if (admin.modificarCantidad())
+                            System.out.println("Producto modificado con exito");
+                        else
+                            System.out.println("El producto no fue modificado");
                     break;
                 case "4":
                     admin.generarFactura();
