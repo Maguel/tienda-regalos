@@ -107,6 +107,19 @@ public class Empleado {
             } else
                 System.out.println("Cerrando sesion");
         } while (!opc.equals("2"));
+        empleado.txt();
+    }
+
+    public void txt() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/ventas.txt", true))) {
+            for (Venta v : historial) {
+                writer.write(v.toString());
+                writer.newLine();
+            }
+            System.out.println("Historial se guardo con exito");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());;
+        }
     }
 }
 
