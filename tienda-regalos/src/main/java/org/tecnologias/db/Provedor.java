@@ -26,6 +26,14 @@ public enum Provedor {
         this.numero = numero;
         this.imagen = imagen;
     }
+    public static Provedor getProvedor(String str) {
+        for (Provedor provedor: Provedor.values()) {
+            if (provedor.name().equalsIgnoreCase(str)){
+                return provedor;
+            }
+        }
+        return null;
+    }
 
     public String getNombre() {
         return nombre;
