@@ -1,3 +1,4 @@
-Nombre: Panda, Codigo: 12345, Cantidad: 1, Nombre: León, Codigo: 234567, Cantidad: 1, Nombre: Osito, Codigo: 123456, Cantidad: 3, Fecha de venta: Sun Dec 03 20:03:48 CST 2023, Precio total: 110.95000076293945, id: 1
-Nombre: Osito, Codigo: 123456, Cantidad: 2, Nombre: Panda, Codigo: 12345, Cantidad: 1, Nombre: León, Codigo: 234567, Cantidad: 1, Fecha de venta: Sun Dec 03 20:33:56 CST 2023, Precio total: 90.95999908447266, id: 2
-Nombre: Osito, Codigo: 123456, Cantidad: 2, Fecha de venta: Sun Dec 03 20:35:39 CST 2023, Precio total: 39.97999954223633, id: 3
+Nombre: Panda, Codigo: 12345, Cantidad: 1, Nombre: Peluchito, Codigo: 123123, Cantidad: 1, Nombre: León, Codigo: 234567, Cantidad: 2, Fecha de venta: Mon Dec 04 00:19:23 CST 2023, Precio total: 126.53, id: 2
+Nombre: Peluchito, Codigo: 123123, Cantidad: 1, Nombre: León, Codigo: 234567, Cantidad: 2, Nombre: Panda, Codigo: 12345, Cantidad: 1, Fecha de venta: Mon Dec 04 00:22:58 CST 2023, Precio total: 126.53, id: 2
+Nombre: León, Codigo: 234567, Cantidad: 2, Nombre: Panda, Codigo: 12345, Cantidad: 1, Nombre: Peluchito, Codigo: 123123, Cantidad: 1, Fecha de venta: Mon Dec 04 00:29:36 CST 2023, Precio total: 126.53, id: 2
+Nombre: León, Codigo: 234567, Cantidad: 2, Nombre: Perro, Codigo: 456789, Cantidad: 1, Nombre: Panda, Codigo: 12345, Cantidad: 1, Nombre: Pingüino, Codigo: 345678, Cantidad: 1, Fecha de venta: Mon Dec 04 00:30:00 CST 2023, Precio total: 121.95, id: 2

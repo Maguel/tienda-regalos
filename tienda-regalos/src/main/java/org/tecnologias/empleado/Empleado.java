@@ -10,7 +10,6 @@ import java.util.*;
 
 public class Empleado {
     private static final Scanner sc = new Scanner(System.in);
-    private final List<Venta> historial = new ArrayList<>();
     private static final DataBase db = DataBase.getInstance();
     private static final Venta venta = new Venta();
 
@@ -19,7 +18,7 @@ public class Empleado {
     }
 
     public void historial() {
-        historial.add(venta);
+        db.getHistorialVentas().add(venta);
     }
 
     public void cancelarProductoPorId(int idPeluche) {
@@ -66,6 +65,8 @@ public class Empleado {
         Empleado empleado = new Empleado();
         String opc, opc1;
         Peluche peluche;
+        Integer contador = 0;
+        List<Peluche> peluchesSinExistencia = new ArrayList<>();
         String str;
         do {
             System.out.println("Menu Empleado\n1.- Comenzar venta\n2.- Cerrar sesion");
@@ -76,9 +77,22 @@ public class Empleado {
                     str = sc.nextLine();
                     if (str.equalsIgnoreCase("q")) break;
                     peluche = db.getProducto(Integer.parseInt(str));
-                    if (peluche != null)
-                        empleado.agregarProducto(peluche);
-                    else
+                    if (peluche != null) {
+                        if (!peluchesSinExistencia.contains(peluche) && contador.equals(peluche.getCantidad())){
+                            contador = 0;
+                            peluchesSinExistencia.add(peluche);
+                        }
+                        if (!contador.equals(peluche.getCantidad()) && !peluchesSinExistencia.contains(peluche)) {
+                            empleado.agregarProducto(peluche);
+                            ++contador;
+                            if (!peluchesSinExistencia.contains(peluche) && contador.equals(peluche.getCantidad())){
+                                contador = 0;
+                                peluchesSinExistencia.add(peluche);
+                            }
+                        } else {
+                            System.out.println("Ya no queda ese peluche en existencia");
+                        }
+                    } else
                         System.out.println("El producto no existe");
                 }
                 do {
@@ -86,7 +100,6 @@ public class Empleado {
                     opc1 = sc.nextLine();
                     switch (opc1) {
                         case "1":
-
                             empleado.realizarVenta();
                             break;
                         case "2":
@@ -113,7 +126,7 @@ public class Empleado {
 
     public void txt() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/ventas.txt", true))) {
-            for (Venta v : historial) {
+            for (Venta v : db.getHistorialVentas()) {
                 writer.write(v.toString());
                 writer.newLine();
             }

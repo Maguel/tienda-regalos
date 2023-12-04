@@ -16,9 +16,14 @@ public class Admin {
 
     public boolean agregarProducto() {
         Peluche.Builder builder = new Peluche.Builder();
-
+        String codigo;
         System.out.println("Codidgo del producto: ");
-        builder.codigo(Integer.parseInt(scanner.nextLine()));
+        codigo = scanner.nextLine();
+        if (DataBase.getInstance().getProducto(Integer.parseInt(codigo))!=null) {
+            return false;
+        } else {
+            builder.codigo(Integer.parseInt(codigo));
+        }
         System.out.println("Nombre del producto: ");
         builder.nombre(scanner.nextLine());
         System.out.println("Precio del producto: ");
@@ -77,7 +82,7 @@ public class Admin {
         }
 
         System.out.print("Proveedor del que quieres facturar: ");
-        String opcion = scanner.next();
+        String opcion = scanner.nextLine();
 
         if (opcion.equalsIgnoreCase("MATTEL")) {
             creador = new CreadorFacturaMattel();
@@ -96,7 +101,8 @@ public class Admin {
             builder.cantidad(Integer.parseInt(scanner.nextLine()));
             System.out.print("Precio del prodcuto: ");
             builder.precio(Float.parseFloat(scanner.nextLine()));
-            System.out.println("Tamaño del producto");
+            System.out.print("Tamaño del producto: ");
+            builder.tamagno(scanner.nextLine());
 
             Peluche peluche = builder.build();
             articulos.add(peluche);
@@ -115,12 +121,11 @@ public class Admin {
     }
 
     public void imprimirFacturas() {
-        Scanner scanner = new Scanner(System.in);
         if (creador == null) {
             System.out.println("Sin facturas hechas");
         } else {
-            for (Provedor provedor1 : Provedor.values()) {
-                provedor1.mostrar();
+            for (Provedor p : Provedor.values()) {
+                p.mostrar();
             }
             System.out.print("Facturas de que proveedor quieres imprimir: ");
             String opcion = scanner.next();
@@ -138,7 +143,7 @@ public class Admin {
         Scanner scanner = new Scanner(System.in);
         String opcion = "0";
 
-        while (!opcion.equals("7")) {
+        while (!opcion.equals("8")) {
             System.out.print(
                     "1: Agregar Producto" +
                             "\n2: Eliminar Producto" +

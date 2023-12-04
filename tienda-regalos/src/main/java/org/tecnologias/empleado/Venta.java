@@ -7,12 +7,12 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Venta implements Serializable {
-    private final DataBase db = DataBase.getInstance();
+    private final DataBase db;
     private Map<Peluche, Integer> articulos = new HashMap<>();
     private Date fecha;
-    private Integer id = db.getHistorialVentas().isEmpty() ? 1 : db.getHistorialVentas().size();
+    private Integer id;
     private Integer cantidad;
-    private Float monto = 0.0F;
+    private Float monto;
 
     public void agregarpeluche(Peluche peluche) {
         if (articulos.containsKey(peluche)) {
@@ -24,6 +24,7 @@ public class Venta implements Serializable {
     }
 
     public Venta(Map<Peluche, Integer> articulos, Date fecha, Float monto, Integer id) {
+        db = DataBase.getInstance();
         this.articulos = articulos;
         this.fecha = fecha;
         this.monto = monto;
@@ -31,11 +32,14 @@ public class Venta implements Serializable {
     }
 
     public Venta() {
+        db = DataBase.getInstance();
+        id = db.getHistorialVentas().isEmpty() ? 1 : db.getHistorialVentas().size();
     }
 
     public void cocretarVenta() {
         this.fecha = new Date();
         this.id++;
+        calcularTotalVenta();
     }
 
     public void limpiar() {
@@ -55,7 +59,7 @@ public class Venta implements Serializable {
             peluche.imprimir(articulos.get(peluche));
         }
         System.out.println(lineSeparator);
-        System.out.printf("| %-16s | %-54s|\n", "Precio total", calcularTotalVenta());
+        System.out.printf("| %-16s | %-54s|\n", "Precio total", monto);
         System.out.println(lineSeparator);
     }
 
@@ -63,18 +67,19 @@ public class Venta implements Serializable {
         return articulos.isEmpty();
     }
 
-    public double calcularTotalVenta() {
+    public void calcularTotalVenta() {
+        monto = 0F;
         for (Peluche peluche : articulos.keySet()) {
             monto += peluche.getPrecio() * articulos.get(peluche);
-            db.modificarCantidad(peluche, peluche.getCantidad() - articulos.get(peluche));
+            var delta = peluche.getCantidad() - articulos.get(peluche);
+            System.out.println("Delta: " + delta);
+            db.modificarCantidad(peluche, delta);
         }
-        return monto;
     }
-
     public Map<Peluche, Integer> getListaPeluches() {
         return articulos;
     }
-
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Peluche peluche : articulos.keySet()) {
@@ -83,7 +88,7 @@ public class Venta implements Serializable {
                     .append("Cantidad: ").append(articulos.get(peluche)).append(", ");
         }
         sb.append("Fecha de venta: ").append(fecha).append(", ")
-                .append("Precio total: ").append(calcularTotalVenta())
+                .append("Precio total: ").append(monto)
                 .append(", ").append("id: ").append(id);
 
         return sb.toString();

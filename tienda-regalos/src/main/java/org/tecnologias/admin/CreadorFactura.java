@@ -17,7 +17,7 @@ public abstract class CreadorFactura {
 
         if(!facturas.isEmpty()){
             for(Factura factura: facturas){
-                if(factura.provedor.getNombre().equals(opcion)){
+                if(factura.provedor.getNombre().equalsIgnoreCase(opcion)){
                     factura.imprimir();
                 }
             }
