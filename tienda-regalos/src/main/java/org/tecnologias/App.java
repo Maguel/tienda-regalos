@@ -2,6 +2,7 @@ package org.tecnologias;
 
 import org.tecnologias.admin.Admin;
 import org.tecnologias.db.DataBase;
+import org.tecnologias.empleado.Empleado;
 
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ public class App {
                 case "2":
                     System.out.println("Introduzca la contraseña");
                     if (DataBase.validarEmpleado(sc.nextLine())) {
-                        System.out.println("Sesión de empleado iniciada");
+                        Empleado.empleadoMain();
                     } else {
                         System.out.println("Contraseña invalida");
                     }
