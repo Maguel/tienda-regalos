@@ -54,7 +54,7 @@ public class Peluche {
         return "\n{ Peluche: " + nombre + "; Codigo: " + codigo + "; Cantidad: " + cantidad + "; Precio: " + precio + "}\n";
     }
     public String mostar() {
-        return "\nPeluche: " + nombre + "Codigo: " + codigo + "Precio: " + precio;
+        return "\nPeluche: " + nombre + " Codigo: " + codigo + " Precio: " + precio;
     }
 
     public Float getPrecio() {

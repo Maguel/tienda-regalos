@@ -1,14 +1,19 @@
 package org.tecnologias.db;
 
+import org.tecnologias.empleado.Venta;
+
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 
 public class DataBase {
     private static final String ADMIN_PASS = "admin";
     private static final String EMPLEADO_PASS = "empleado";
     private final HashMap<Integer, Peluche> inventario = new HashMap<>();
+    private List<Venta> historialVentas;
     ClassLoader classLoader = DataBase.class.getClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream("db.txt");
+    InputStream inputStreamPeluches = classLoader.getResourceAsStream("peluches.txt");
+    InputStream inputStreamVentas = classLoader.getResourceAsStream("ventas.txt");
 
     public static boolean validarAdmin(String pass) {
         return ADMIN_PASS.equals(pass);
@@ -20,7 +25,7 @@ public class DataBase {
 
     public boolean agregarProducto(Peluche peluche) {
         if (inventario.put(peluche.getCodigo(), peluche) == null) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/db.txt", true))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/peluches.txt", true))) {
                 writer.write(peluche.getClasificacion()
                         + ", " + peluche.getCodigo()
                         + ", " + peluche.getNombre()
@@ -53,21 +58,19 @@ public class DataBase {
 
     private DataBase() {
         Peluche.Builder builder = new Peluche.Builder();
-        if (inputStream != null) {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+        if (inputStreamPeluches != null) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStreamPeluches))) {
                 String line;
                 while ((line = br.readLine()) != null) {
-                    // Dividir la línea en atributos usando algún delimitador (por ejemplo, ",")
                     String[] attributes = line.split(",");
 
-                    // Crear una instancia de Peluche con los atributos y agregarlo a la lista
                     Peluche peluche = builder.clasificacion(attributes[0].stripLeading()).
                             codigo(Integer.parseInt(attributes[1].stripLeading())).
                             nombre(attributes[2].stripLeading()).
                             provedor(attributes[3].stripLeading()).
                             precio(Float.parseFloat(attributes[4].stripLeading())).
                             cantidad(Integer.parseInt(attributes[5].stripLeading())).
-                            tamagno(attributes[5].stripLeading()).build();
+                            tamagno(attributes[6].stripLeading()).build();
                     inventario.put(peluche.getCodigo(), peluche);
                 }
             } catch (IOException e) {

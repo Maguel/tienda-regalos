@@ -20,12 +20,8 @@ public class Venta implements Serializable {
         }
     }
 
-
-    public void agregarfecha() {
+    public void cocretarVenta() {
         this.fecha = new Date();
-    }
-
-    public void ID() {
         this.id++;
     }
 
@@ -66,6 +62,17 @@ public class Venta implements Serializable {
         return articulos;
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Peluche peluche : articulos.keySet()) {
+            sb.append("Nombre: ").append(peluche.getNombre()).append(", ")
+                    .append("Codigo: ").append(peluche.getCodigo()).append(", ");
+        }
+        sb.append("Fecha de venta: ").append(fecha).append(", ");
+        sb.append("Precio total: ").append(calcularTotalVenta());
+
+        return sb.toString();
+    }
 }
 
 

@@ -3,15 +3,14 @@ package org.tecnologias.empleado;
 import org.tecnologias.db.DataBase;
 import org.tecnologias.db.Peluche;
 
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 public class Empleado {
     private static final Scanner sc = new Scanner(System.in);
-    private List<Venta> historial = new ArrayList<>();
+    private final List<Venta> historial = new ArrayList<>();
     private static final DataBase db = DataBase.getInstance();
     private static final Venta venta = new Venta();
 
@@ -26,12 +25,18 @@ public class Empleado {
     public void cancelarProductoPorId(int idPeluche) {
         if (!venta.vacia()) {
             List<Peluche> listaPeluches = new ArrayList<>(venta.getListaPeluches().keySet());
+            Map<Peluche, Integer> map = venta.getListaPeluches();
             Iterator<Peluche> iterator = listaPeluches.iterator();// Utiliza un Iterator para poder eliminar elementos durante la iteración
             while (iterator.hasNext()) {
                 Peluche peluche = iterator.next();
                 if (peluche.getCodigo() == idPeluche) {
-                    iterator.remove();
-                    System.out.println("Peluche eliminado con ID: " + idPeluche);
+                    if (map.get(peluche) == 1) {
+                        iterator.remove();
+                    } else {
+                        map.replace(peluche, map.get(peluche), map.get(peluche) - 1);
+                    }
+
+                    System.out.println("Peluche cancelado con ID: " + idPeluche);
                 }
             }
             venta.calcularTotalVenta();
@@ -42,8 +47,7 @@ public class Empleado {
 
     public void realizarVenta() {
         if (!venta.vacia()) {
-            venta.agregarfecha();
-            venta.ID();
+            venta.cocretarVenta();
             historial();
             venta.imprimirVenta();
             venta.limpiar();
@@ -57,10 +61,6 @@ public class Empleado {
         venta.agregarpeluche(peluche);
     }
 
-    public void obtenerVentaActual(Venta ventaActual) {
-        ventaActual.imprimirVenta();
-    }
-
     public static void empleadoMain() {
         Empleado empleado = new Empleado();
         String opc, opc1;
@@ -70,7 +70,7 @@ public class Empleado {
             System.out.println("Menu Empleado\n1.- Comenzar venta\n2.- Cerrar sesion");
             opc = sc.nextLine();
             if (opc.equals("1")) {
-                while (true){
+                while (true) {
                     System.out.println("Introduzca el codigo del producto o 'Q' para finalizar la compra");
                     str = sc.nextLine();
                     if (str.equalsIgnoreCase("q")) break;
@@ -89,7 +89,7 @@ public class Empleado {
                             break;
                         case "2":
                             do {
-                                for (Peluche p: venta.getListaPeluches().keySet()) {
+                                for (Peluche p : venta.getListaPeluches().keySet()) {
                                     System.out.print(p.mostar());
                                 }
                                 System.out.println("\nIntroduzca el id del producto a cancelar");
